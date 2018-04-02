@@ -4,20 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Enter rating"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-
-    <EditText
-        android:id="@+id/etRating"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-
     <LinearLayout
         android:id="@+id/group"
         android:layout_width="wrap_content"
