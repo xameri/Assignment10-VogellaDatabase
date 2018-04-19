@@ -15,8 +15,13 @@ public class CommentsDataSource {
     // Database fields
     private SQLiteDatabase database;
     private MySQLiteHelper dbHelper;
+
     private String[] allColumns = { MySQLiteHelper.COLUMN_ID,
-            MySQLiteHelper.COLUMN_COMMENT };
+            MySQLiteHelper.COLUMN_COMMENT, MySQLiteHelper.COLUMN_RATING};
+
+    // from farah
+    //private String[] allColumns = { MySQLiteHelper.COLUMN_ID,
+    //MySQLiteHelper.COLUMN_COMMENT, MySQLiteHelper.COLUMN_RATING };
 
     // intitiating dbhelper variable
     public CommentsDataSource(Context context) {
@@ -34,14 +39,23 @@ public class CommentsDataSource {
     }
 
     // Creating the value of comment
-    public Comment createComment(String comment) {
+    public Comment createComment(String comment, String rating) {
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.COLUMN_COMMENT, comment);
+
+        // from farah
+        values.put(MySQLiteHelper.COLUMN_RATING, rating);
+
         long insertId = database.insert(MySQLiteHelper.TABLE_COMMENTS, null,
                 values);
-        Cursor cursor = database.query(MySQLiteHelper.TABLE_COMMENTS,
-                allColumns, MySQLiteHelper.COLUMN_ID + " = " + insertId, null,
-                null, null, null);
+
+        //Cursor cursor = database.query(MySQLiteHelper.TABLE_COMMENTS,
+        //allColumns, MySQLiteHelper.COLUMN_ID + " = " + insertId, null,
+        // null, null, null);
+
+        // from farah
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_COMMENTS, null, null, null, null, null, null);
+
         cursor.moveToFirst();
         Comment newComment = cursorToComment(cursor);
         cursor.close();
@@ -83,6 +97,13 @@ public class CommentsDataSource {
     private Comment cursorToComment(Cursor cursor) {
         Comment comment = new Comment();
         comment.setId(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.COLUMN_ID)));
+
+        // from farah
+        // the app started crashing after i added the below line
+       // comment.setRating(cursor.getString(cursor.getColumnIndex( MySQLiteHelper.COLUMN_RATING )));
+        comment.setRating(cursor.getString( cursor.getColumnIndex( MySQLiteHelper.COLUMN_RATING ) ));
+        // comment.setRate(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.COLUMN_COMMENT)));
+
         // comment.setId(cursor.getLong(0));
         comment.setComment(cursor.getString(1));
         return comment;
